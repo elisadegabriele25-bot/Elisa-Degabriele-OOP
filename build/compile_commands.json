@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/elisa.degabriele/OOP/build",
+  "command": "/usr/bin/c++   -g -arch arm64 -o CMakeFiles/OOP.dir/main.cpp.o -c /Users/elisa.degabriele/OOP/main.cpp",
+  "file": "/Users/elisa.degabriele/OOP/main.cpp",
+  "output": "CMakeFiles/OOP.dir/main.cpp.o"
+}
+]
