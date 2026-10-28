@@ -372,7 +372,6 @@ void displayAll(const std::vector<Item*>& items) {
     for (std::size_t i = 0; i < items.size(); ++i) items[i]->display();
 }
  
-// vector<Item*> does not delete its elements, so we do it ourselves.
 void clearItems(std::vector<Item*>& items) {
     for (std::size_t i = 0; i < items.size(); ++i) delete items[i];
     items.clear();
