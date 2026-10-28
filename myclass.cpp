@@ -6,71 +6,6 @@
 #include <vector>
 using namespace std;
 
-const char SEP = '|';
-const string FILE_NAME = "shopping_items.txt";
-
-// ---------- Input helpers ----------
-
-string readString(string prompt) {
-    string s;
-    do {
-        cout << prompt << ": ";
-        getline(cin, s);
-    } while (s.empty());
-
-    for (char& c : s)
-        if (c == SEP) c = '/';
-
-    return s;
-}
-
-template <typename T>
-T readNumber(string prompt, T minValue) {
-    T value;
-    string s;
-
-    while (true) {
-        cout << prompt << ": ";
-        getline(cin, s);
-
-        stringstream ss(s);
-        char extra;
-
-        if (ss >> value && !(ss >> extra) && value >= minValue)
-            return value;
-
-        cout << "Invalid number. Try again.\n";
-    }
-}
-
-bool readBool(string prompt) {
-    string s;
-
-    while (true) {
-        s = readString(prompt + " (y/n)");
-
-        if (s == "y" || s == "Y") return true;
-        if (s == "n" || s == "N") return false;
-
-        cout << "Enter y or n.\n";
-    }
-}
-
-string yesNo(bool value) {
-    return value ? "yes" : "no";
-}
-
-vector<string> split(string s) {
-    vector<string> fields;
-    string field;
-    stringstream ss(s);
-
-    while (getline(ss, field, SEP))
-        fields.push_back(field);
-
-    return fields;
-}
-
 // ---------- Base class ----------
 
 class Item {
@@ -84,23 +19,16 @@ public:
         : name(n), price(p), quantity(q) {}
 
     virtual ~Item() {}
+    virtual void display() const;
 
-    virtual void display() const {
-        cout << "[" << type() << "] " << name
-             << " | Price: " << fixed << setprecision(2) << price
-             << " | Quantity: " << quantity << '\n';
-    }
+    string getName() const;
+    double getPrice() const;
+    int getQuantity() const;
 
-    virtual string type() const = 0;
-    virtual char id() const = 0;
-    virtual void save(ofstream& out) const = 0;
+    void setName(const string& n);
+    void setPrice(double p) const;
+    void setQuantity(int q);
 
-    void saveCommon(ofstream& out) const {
-        out << id() << SEP << name << SEP
-            << price << SEP << quantity;
-    }
-
-    static Item* load(vector<string> f);
 };
 
 // ---------- Grocery ----------
