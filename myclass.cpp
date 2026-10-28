@@ -50,19 +50,6 @@ public:
         cout << "  Expiry: " << expiry << ", Weight: " << weight
              << " kg, Organic: " << yesNo(organic) << '\n';
     }
-
-    void save(ofstream& out) const override {
-        saveCommon(out);
-        out << SEP << expiry << SEP << weight << SEP << organic << '\n';
-    }
-
-    static Item* create() {
-        return new Grocery(
-            readString("Name"), readNumber<double>("Price", 0.0),
-            readNumber<int>("Quantity", 1),
-            readString("Expiry date"), readNumber<double>("Weight (kg)", 0.0),
-            readBool("Organic"));
-    }
 };
 
 // ---------- Electronics ----------
@@ -85,18 +72,6 @@ public:
              << " months, Power: " << power << " W\n";
     }
 
-    void save(ofstream& out) const override {
-        saveCommon(out);
-        out << SEP << brand << SEP << warranty << SEP << power << '\n';
-    }
-
-    static Item* create() {
-        return new Electronics(
-            readString("Name"), readNumber<double>("Price", 0.0),
-            readNumber<int>("Quantity", 1), readString("Brand"),
-            readNumber<int>("Warranty (months)", 0),
-            readNumber<double>("Power (W)", 0.0));
-    }
 };
 
 // ---------- Clothing ----------
@@ -115,18 +90,6 @@ public:
         Item::display();
         cout << "  Size: " << size << ", Material: " << material
              << ", Color: " << color << '\n';
-    }
-
-    void save(ofstream& out) const override {
-        saveCommon(out);
-        out << SEP << size << SEP << material << SEP << color << '\n';
-    }
-
-    static Item* create() {
-        return new Clothing(
-            readString("Name"), readNumber<double>("Price", 0.0),
-            readNumber<int>("Quantity", 1), readString("Size"),
-            readString("Material"), readString("Color"));
     }
 };
 
@@ -181,19 +144,6 @@ public:
         cout << "  Brand: " << brand << ", Minimum age: " << minAge
              << ", Needs batteries: " << yesNo(batteries) << '\n';
     }
-
-    void save(ofstream& out) const override {
-        saveCommon(out);
-        out << SEP << brand << SEP << minAge << SEP << batteries << '\n';
-    }
-
-    static Item* create() {
-        return new Toy(
-            readString("Name"), readNumber<double>("Price", 0.0),
-            readNumber<int>("Quantity", 1), readString("Brand"),
-            readNumber<int>("Minimum age", 0),
-            readBool("Needs batteries"));
-    }
 };
 
 // ---------- Loading saved items ----------
@@ -243,58 +193,4 @@ Item* Item::load(vector<string> f) {
 // ---------- Main program ----------
 
 int main() {
-    vector<Item*> items;
-    ifstream in(FILE_NAME);
-    string line;
-
-    while (getline(in, line)) {
-        vector<string> fields = split(line);
-        Item* item = Item::load(fields);
-
-        if (item)
-            items.push_back(item);
-    }
-    in.close();
-
-    cout << "Loaded " << items.size() << " item(s).\n";
-
-    while (true) {
-        cout << "\n1. Add grocery\n"
-             << "2. Add electronics\n"
-             << "3. Add clothing\n"
-             << "4. Add book\n"
-             << "5. Add toy\n"
-             << "6. Show items\n"
-             << "0. Save and exit\n"
-             << "Choice: ";
-
-        string choice;
-        getline(cin, choice);
-
-        if (choice == "0") break;
-        else if (choice == "1") items.push_back(Grocery::create());
-        else if (choice == "2") items.push_back(Electronics::create());
-        else if (choice == "3") items.push_back(Clothing::create());
-        else if (choice == "4") items.push_back(Book::create());
-        else if (choice == "5") items.push_back(Toy::create());
-        else if (choice == "6") {
-            if (items.empty())
-                cout << "No items.\n";
-
-            for (Item* item : items)
-                item->display();
-        }
-        else
-            cout << "Invalid choice.\n";
-    }
-
-    ofstream out(FILE_NAME);
-
-    for (Item* item : items) {
-        item->save(out);
-        delete item;
-    }
-
-    cout << "Items saved. Goodbye!\n";
-    return 0;
 }
