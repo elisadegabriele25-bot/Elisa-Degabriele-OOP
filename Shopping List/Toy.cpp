@@ -1,5 +1,6 @@
 #include "Toy.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -11,4 +12,13 @@ void Toy::displayToyInfo() const {
     displayInfo();
     cout << "Toy ID: " << toyId << ", Category: "
     << toyCategory << endl;
+}
+
+
+void Toy::persist(ofstream& out) const {
+    out << "Toy" << "|"
+        << name << "|"
+        << price << "|"
+        << toyId << "|"
+        << toyCategory << endl;
 }

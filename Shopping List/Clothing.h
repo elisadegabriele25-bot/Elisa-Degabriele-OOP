@@ -2,6 +2,7 @@
 #define CLOTHING_H
 
 #include "Item.h"
+#include <fstream>
 
 class Clothing : public Item {
     public:
@@ -9,6 +10,7 @@ class Clothing : public Item {
     ~Clothing() override = default;
 
     void displayClothingInfo() const;
+    void persist(ofstream& out) const override;
 
     private:
     int clothingId;

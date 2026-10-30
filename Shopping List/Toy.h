@@ -2,6 +2,7 @@
 #define BOOK_H
 
 #include "Item.h"
+#include <fstream>
 
 class Toy : public Item {
     public:
@@ -9,6 +10,7 @@ class Toy : public Item {
     ~Toy() override = default;
 
     void displayToyInfo() const;
+    void persist(ofstream& out) const override;
 
     private:
     int toyId;

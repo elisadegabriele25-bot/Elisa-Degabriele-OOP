@@ -1,5 +1,6 @@
 #include "Book.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -11,4 +12,12 @@ void Book::displayBookInfo() const {
     displayInfo();
     cout << "Book ID: " << bookId << ", Genre: "
     << bookGenre << endl;
+}
+
+void Book::persist(ofstream& out) const {
+    out << "Book" << "|"
+        << name << "|"
+        << price << "|"
+        << bookId << "|"
+        << bookGenre << endl;
 }

@@ -1,5 +1,6 @@
 #include "Grocery.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -11,4 +12,12 @@ void Grocery::displayGroceryInfo() const {
     displayInfo();
     cout << "Grocery ID: " << groceryId << ", Weight: "
     << groceryWeight << endl;
+}
+
+void Grocery::persist(ofstream& out) const {
+    out << "Grocery" << "|"
+        << name << "|"
+        << price << "|"
+        << groceryId << "|"
+        << groceryWeight << endl;
 }

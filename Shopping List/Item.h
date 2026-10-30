@@ -2,6 +2,7 @@
 #define ITEM_H
 
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ class Item {
     virtual ~Item();
 
     virtual void displayInfo() const;
+    virtual void persist(ofstream& out) const = 0;
 
     protected:
     string name;

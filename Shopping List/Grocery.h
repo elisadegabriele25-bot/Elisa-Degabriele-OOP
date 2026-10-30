@@ -2,6 +2,7 @@
 #define GROCERY_H
 
 #include "Item.h"
+#include <fstream>
 
 class Grocery : public Item {
     public:
@@ -9,6 +10,7 @@ class Grocery : public Item {
     ~Grocery() override = default;
 
     void displayGroceryInfo() const;
+    void persist(ofstream& out) const override;
 
     private:
     int groceryId;

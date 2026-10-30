@@ -2,6 +2,7 @@
 #define ELECTRONICS_H
 
 #include "Item.h"
+#include <fstream>
 
 class Electronics : public Item {
     public:
@@ -9,6 +10,7 @@ class Electronics : public Item {
     ~Electronics() override = default;
 
     void displayElectronicsInfo() const;
+    void persist(ofstream& out) const override;
 
     private:
     int elecId;

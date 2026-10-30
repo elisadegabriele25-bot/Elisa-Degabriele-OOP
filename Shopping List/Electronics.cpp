@@ -1,5 +1,6 @@
 #include "Electronics.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -13,3 +14,10 @@ void Electronics::displayElectronicsInfo() const {
     << elecBrand << endl;
 }
 
+void Electronics::persist(ofstream& out) const {
+    out << "Electronics" << "|"
+        << name << "|"
+        << price << "|"
+        << elecId << "|"
+        << elecBrand << endl;
+}
